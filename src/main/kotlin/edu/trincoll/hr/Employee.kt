@@ -1,16 +1,30 @@
 package edu.trincoll.hr
 
-// Abstract class Employee should have:
-//   - a name of type String
-//   - an id of type Int.
-// It should implement the Comparable interface with the
-// compareTo method.
-//
-// It should include an abstract method pay()
-// that returns a Double.
-//
-// It should override the toString method to
-// return a string with the name and id of the employee.
 abstract class Employee(
-) {
+    val name: String,
+    val id: Int
+) : Comparable<Employee> {
+
+    //Override the compareTo method in Comparable
+    override fun compareTo(other: Employee): Int {
+        val payComparison = this.pay().compareTo(other.pay())
+        if (payComparison != 0) {
+            return payComparison
+        }
+
+        val nameComparison = name.compareTo(other.name)
+        if (nameComparison != 0) {
+            return nameComparison
+        }
+
+        return id.compareTo(other.id)
+    }
+    //Override the toString method
+    override fun toString(): String {
+        return "$name, $id"
+    }
+    //Abstract method to calculate pay
+    abstract fun pay(): Double
+
+
 }

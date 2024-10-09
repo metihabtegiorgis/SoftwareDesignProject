@@ -1,10 +1,20 @@
 package edu.trincoll.hr
 
-// The HR class should have:
-//   - a list of employees
-//   - a hire method that takes an employee and returns a new HR object with that employee added
-//   - a fire method that takes an id and returns a new HR object with the employee with that id removed
-//   - a payEmployees method that returns the total pay of all employees
 class HR(private val employees: List<Employee> = emptyList()) {
+
+    //Method to hire a new employee
+    fun hire(employee: Employee) : HR {
+        val currEmployees = employees + employee
+        return HR(currEmployees)
+    }
+    //Method to fire an employee
+    fun fire(id: Int): HR{
+        val currEmployees = employees.filter{ it.id != id}
+        return HR(currEmployees)
+    }
+    //Method to calculate the total pay of the employees
+    fun payEmployees() : Double {
+        return employees.sumOf{ it.pay() }
+    }
 
 }
