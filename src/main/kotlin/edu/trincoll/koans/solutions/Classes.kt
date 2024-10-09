@@ -1,6 +1,9 @@
-package edu.trincoll.koans
+package edu.trincoll.koans.solutions
+
+// Rename on import
 import kotlin.random.Random as KRandom
 import java.util.Random as JRandom
+
 // Data classes
 data class Person(val name: String, val age: Int)
 
@@ -11,18 +14,17 @@ fun getPeople(): List<Person> {
 fun comparePeople(): Boolean {
     val p1 = Person("Alice", 29)
     val p2 = Person("Alice", 29)
-    return p1 == p2  // should be true
+    return p1 == p2
 }
 
 // Smart casts
 fun evalSmartCasts(expr: Expr): Int =
     when (expr) {
         is Num -> expr.value
-        is Sum -> eval(expr.left) + eval(expr.right)
-        else -> throw IllegalArgumentException("Unknown expression")
+        is Sum -> evalSmartCasts(expr.left) + evalSmartCasts(expr.right)
     }
 
-interface Expr
+sealed interface Expr
 class Num(val value: Int) : Expr
 class Sum(val left: Expr, val right: Expr) : Expr
 
@@ -31,10 +33,8 @@ fun eval(expr: Expr): Int =
     when (expr) {
         is Num -> expr.value
         is Sum -> eval(expr.left) + eval(expr.right)
-        else -> throw IllegalArgumentException("Unknown expression")
     }
 
-// Rename on import
 
 fun useDifferentRandomClasses(): String {
     return "Kotlin random: " +
